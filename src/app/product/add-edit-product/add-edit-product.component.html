@@ -1,0 +1,38 @@
+<div class="container">
+  <div>
+    <h1>Add Products</h1>
+    <br>
+  </div>
+  <div *ngIf="productId">
+    <img src='http://localhost:3000/product/{{oldImage}}' height="30" width="30">
+  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="first_name">Name:</label>
+      <input id="first_name" class="form-control" type="text" formControlName="name"><br>
+      <span class="text-danger" *ngIf="form.get('name').touched && form.get('name').invalid">Please enter name.</span>
+    </div>
+    <div class="form-group">
+      <label for="price">Price:</label>
+      <input id="price" class="form-control" type="text" formControlName="price"><br>
+      <span class="text-danger" *ngIf="form.get('price').touched && form.get('price').invalid">Please valid enter price.</span>
+    </div>
+    <div class="form-group">
+      <label for="category">Category:</label>
+      <input id="category" class="form-control" type="text" formControlName="category"><br>
+      <span class="text-danger" *ngIf="form.get('category').touched && form.get('category').invalid">Please enter category.</span>
+    </div>
+    <div class="form-group">
+      <label for="sku">Sku:</label>
+      <input id="sku" class="form-control" type="text" formControlName="sku"><br>
+      <span class="text-danger" *ngIf="form.get('sku').touched && form.get('sku').invalid">Please enter sku.</span>
+    </div>
+    <div class="file_div">
+      <input type="file"  id="customFile" (change)="handleFileInput($event.target.files)"/>
+    </div>
+    <span *ngIf="imageError" class="text-danger"> Please select image</span>
+    <br>
+    <button type="submit" >submit</button>
+  </form>
+
+</div>

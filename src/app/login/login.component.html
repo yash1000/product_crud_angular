@@ -1,0 +1,54 @@
+<div class="container">
+  <div>
+    <div>
+      <h1>User login</h1>
+      <br>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input id="email" class="form-control" type="text" formControlName="email"><br>
+        <span class="text-danger" *ngIf="(form.get('email').touched || submitted) && form.get('email').invalid">Please provide valid email address.</span>
+      </div>
+      <div class="form-group">
+        <label for="password">Passwors:</label>
+        <input id="password" class="form-control" type="password" formControlName="password"><br>
+        <span
+          *ngIf="form.controls['password'].hasError('hasNumber') && (form.get('password').touched || submitted); then notShow11; else notShow"></span>
+        <ng-template #notShow11>
+          <span class="text-danger"> Must have at least 1 number!</span>
+        </ng-template>
+
+
+        <ng-template #notShow>
+					 <span
+             *ngIf="form.controls['password'].hasError('hasCapitalCase') && (form.get('password').touched || submitted) else notShow1"
+             class="text-danger">
+					 Must have at least 1 Capital Case!
+					 </span>
+        </ng-template>
+
+
+        <ng-template #notShow1>
+					<span *ngIf="form.controls['password'].hasError('haslengthCase') && (form.get('password').touched || submitted) else notShow12" class="text-danger">
+					Must have length 1 special charecter!
+					</span>
+        </ng-template>
+
+
+        <ng-template #notShow12>
+					<span *ngIf="form.get('password').errors?.minlength  && (form.get('password').touched || submitted) else notShow13" class="text-danger">
+					Please enter minimum 8 charecter
+					</span>
+        </ng-template>
+        <ng-template #notShow13>
+					<span
+            *ngIf="form.get('password').errors?.required  && (form.get('password').touched || submitted)" class="text-danger">
+					Please enter the password!
+					</span>
+        </ng-template>
+      </div>
+      <button type="submit" >submit</button>
+    </form>
+  </div>
+</div>

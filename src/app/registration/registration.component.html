@@ -1,0 +1,127 @@
+<div class="container">
+  <div>
+    <div>
+      <h1>User registration</h1>
+      <br>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="first_name">First name:</label>
+        <input id="first_name" class="form-control" type="text" formControlName="first_name"><br>
+        <span class="text-danger" *ngIf="(form.get('first_name').touched || submitted) && form.get('first_name').invalid">Please provide first name</span>
+      </div>
+      <div class="form-group">
+        <label for="last_name">Last name:</label>
+        <input id="last_name" class="form-control" type="text" formControlName="last_name"><br>
+        <span class="text-danger" *ngIf="(form.get('last_name').touched || submitted) && form.get('last_name').invalid">Please provide last name</span>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input id="email" class="form-control" type="text" formControlName="email"><br>
+        <span class="text-danger" *ngIf="(form.get('email').touched || submitted) && form.get('email').invalid">Please provide valid email address.</span>
+      </div>
+      <div class="form-group">
+        <label for="mobile">Mobile:</label>
+        <input id="mobile" class="form-control" type="text" formControlName="mobile"><br>
+        <span
+          *ngIf="form.controls['mobile'].hasError('hasNumber') && (submitted || form.get('mobile').touched); then notShow11_mobile; else notShow_mobile"></span>
+        <ng-template #notShow11_mobile>
+          <span class="text-danger"> Must have all number!</span>
+        </ng-template>
+
+        <ng-template #notShow_mobile>
+					<span *ngIf="form.get('mobile').errors?.minlength  && (form.get('mobile').touched || submitted) else notShow_span" class="text-danger">
+					Please enter minimum 10 charecter
+					</span>
+        </ng-template>
+        <ng-template #notShow_span>
+        <span
+          *ngIf="form.get('mobile').errors?.required  && (form.get('mobile').touched || submitted)" class="text-danger">
+					Please enter the mobile number!
+					</span>
+        </ng-template>
+
+      </div>
+      <div class="form-group">
+        <label>Gender:</label>
+        <br>
+        <input type="radio" id="male" name="gender" value="1" formControlName="gender">&nbsp;
+        <label for="male">Male</label><br>
+        <input type="radio" id="female" name="gender" value="2" formControlName="gender">&nbsp;
+        <label for="female">Female</label><br>
+        <input type="radio" id="other" name="gender" value="3" formControlName="gender">&nbsp;
+        <label for="other">Other</label>
+<br>
+        <span class="text-danger" *ngIf="(form.get('gender').touched || submitted) && form.get('gender').invalid">Please enter gender</span>
+      </div>
+      <div class="form-group">
+        <label>Category:</label>
+
+        <select formControlName="category">
+          <ng-container>
+            <option>Action</option>
+            <option>Action1</option>
+            <option>Action2</option>
+          </ng-container>
+        </select>
+
+        <br>
+
+        <span class="text-danger" *ngIf="(form.get('category').touched || submitted) && form.get('category').invalid">Please provide category</span>
+      </div>
+      <div class="form-group">
+        <label for="password">Passwors:</label>
+        <input id="password" class="form-control" type="password" formControlName="password" (keyup)="setConfirmPassword()"><br>
+        <span
+          *ngIf="form.controls['password'].hasError('hasNumber') && (form.get('password').touched || submitted); then notShow11; else notShow"></span>
+        <ng-template #notShow11>
+          <span class="text-danger"> Must have at least 1 number!</span>
+        </ng-template>
+
+
+        <ng-template #notShow>
+					 <span
+             *ngIf="form.controls['password'].hasError('hasCapitalCase') && (form.get('password').touched || submitted) else notShow1"
+             class="text-danger">
+					 Must have at least 1 Capital Case!
+					 </span>
+        </ng-template>
+
+
+        <ng-template #notShow1>
+					<span *ngIf="form.controls['password'].hasError('haslengthCase') && (form.get('password').touched || submitted) else notShow12" class="text-danger">
+					Must have length 1 special charecter!
+					</span>
+        </ng-template>
+
+
+        <ng-template #notShow12>
+					<span *ngIf="form.get('password').errors?.minlength  && (form.get('password').touched || submitted) else notShow13" class="text-danger">
+					Please enter minimum 8 charecter
+					</span>
+        </ng-template>
+        <ng-template #notShow13>
+					<span
+            *ngIf="form.get('password').errors?.required  && (form.get('password').touched || submitted)" class="text-danger">
+					Please enter the password!
+					</span>
+        </ng-template>
+      </div>
+      <div class="form-group">
+        <label for="password">Confirm passwors:</label>
+        <input id="confirm_password" class="form-control" type="password" formControlName="confirm_password"><br>
+        <span class="text-danger" *ngIf="form.get('confirm_password').errors?.required  && (form.get('confirm_password').touched || submitted) else notShow345">please enter the confirm password</span>
+        <ng-template #notShow345>
+          <span  class="text-danger" *ngIf="!form.get('confirm_password').valid && (form.get('confirm_password').touched || submitted)" class="help-block">please Match above password</span><br>
+        </ng-template>
+      </div>
+      <div class="file_div">
+        <input type="file"  id="customFile" (change)="handleFileInput($event.target.files)"/>
+      </div>
+      <span *ngIf="imageError" class="text-danger"> Please select image</span>
+      <br>
+      <button type="submit" >submit</button>
+    </form>
+  </div>
+</div>
+
